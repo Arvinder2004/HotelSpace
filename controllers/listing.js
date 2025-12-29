@@ -9,7 +9,7 @@ module.exports.index = async (req, res) => {
     }
     catch (err) {
         console.error("Error fetching listings:", err);
-        req.flash("error", "Server is waking up or listing fetch failed. Please try again shortly.");
+        req.flash("error", "Server is waking up. Please try again shortly.");
         res.redirect("/");
     }
 };

@@ -15,11 +15,11 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
-
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
-
+// --- NEW: Import Booking Route ---
+const bookingRouter = require("./routes/booking.js");
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -35,19 +35,15 @@ async function main() {
   await mongoose.connect(dbUrl); 
 }
 
-
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
-
 
 app.use(express.urlencoded({ extended: true })); 
 app.use(methodOverride("_method")); 
 app.use(express.static(path.join(__dirname, "/public"))); 
 
-
 app.use(session({
- 
   secret: process.env.SECRET, 
   resave: false, 
   saveUninitialized: true,
@@ -58,19 +54,14 @@ app.use(session({
   },
 }));
 
-
-
 app.use(flash()); 
-
 
 app.use(passport.initialize()); 
 app.use(passport.session()); 
 passport.use(new LocalStrategy(User.authenticate())); 
 
-
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success"); 
@@ -79,33 +70,26 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use("/listings", listingRouter); 
 app.use("/listings/:id/reviews", reviewRouter); 
 app.use("/", userRouter); 
-
+// --- NEW: Use Booking Route ---
+app.use("/listings/:id/bookings", bookingRouter);
 
 app.get("/", (req, res) => {
   res.redirect("/listings");
 });
 
-
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found")); 
 });
-
 
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).render("error.ejs", { message }); 
 });
 
-
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`✅ server is listening on port ${PORT}`);
 });
-
-
-
-
