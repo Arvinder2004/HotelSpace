@@ -9,6 +9,8 @@ const { saveRedirectUrl } = require("../middleware.js");
 
 const userController = require("../controllers/user.js");
 
+const { isLoggedIn } = require("../middleware");
+
 router.get("/signup", userController.renderSignupForm);
 
 router.post(
@@ -31,6 +33,8 @@ router.post(
 );
 
 router.get("/logout", userController.logout);
+
+router.get("/bookings", isLoggedIn, wrapAsync(userController.renderBookings));
 
 module.exports = router;
 

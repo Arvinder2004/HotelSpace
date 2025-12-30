@@ -1,14 +1,14 @@
 <style>
 
   .btn-search {
-    background-color: #fe424d; 
+    background-color: lightslategray; 
     color: #fff;              
     border-radius: 25px;      
     padding: 0 1rem;        
   }
 
   .btn-search:hover {
-    background-color: #fe424d;
+    background-color: rgb(54, 66, 70);
     color: #fff;
   }
 
@@ -71,10 +71,14 @@
           <a class="nav-link" href="/login"><b>Login</b></a>
         <% } %>
 
-        <% if (currUser) { %>
-         
-          <a class="nav-link" href="/logout"><b>Logout</b></a>
+        <% if(currUser) { %>
+          <a class="nav-link" href="/bookings">My Bookings</a>
         <% } %>
+
+        <% if (currUser) { %>
+          <a class="nav-link" href="/logout" style="color: #dc3545 !important;"><b>Logout</b></a>
+        <% } %>
+
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
 const User = require("../models/user.js");
+const Booking = require("../models/booking");
 
 module.exports.renderSignupForm = (req, res) => {
     res.render("users/signup.ejs");
@@ -54,4 +55,11 @@ module.exports.logout = (req, res, next) => {
         req.flash("success", "you are logged out!"); 
         res.redirect("/listings"); 
     });
+};
+
+module.exports.renderBookings = async (req, res) => {
+   
+    const bookings = await Booking.find({ user: req.user._id }).populate("listing");
+    
+    res.render("users/bookings.ejs", { bookings });
 };

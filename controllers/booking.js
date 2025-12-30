@@ -16,7 +16,8 @@ module.exports.createBooking = async (req, res) => {
         user: req.user._id,
         listing: id,
         checkIn: checkIn,
-        checkOut: checkOut
+        checkOut: checkOut,
+        status: "Confirmed"
     });
 
     await newBooking.save();
@@ -24,4 +25,13 @@ module.exports.createBooking = async (req, res) => {
     req.flash("success", "Booking Confirmed!");
     
     res.redirect("/listings");
+};
+
+module.exports.destroyBooking = async (req, res) => {
+    const { id, bookingId } = req.params;
+    
+    await Booking.findByIdAndDelete(bookingId);
+    
+    req.flash("success", "Booking Cancelled!");
+    res.redirect("/bookings");
 };
