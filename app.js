@@ -76,6 +76,7 @@ app.use("/", userRouter);
 
 app.use("/listings/:id/bookings", bookingRouter);
 
+
 app.get("/", (req, res) => {
   res.redirect("/listings");
 });
@@ -88,6 +89,7 @@ app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).render("error.ejs", { message }); 
 });
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
