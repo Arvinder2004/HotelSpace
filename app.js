@@ -18,7 +18,7 @@ const User = require("./models/user.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
-// --- NEW: Import Booking Route ---
+
 const bookingRouter = require("./routes/booking.js");
 
 const dbUrl = process.env.ATLASDB_URL;
@@ -73,7 +73,7 @@ app.use((req, res, next) => {
 app.use("/listings", listingRouter); 
 app.use("/listings/:id/reviews", reviewRouter); 
 app.use("/", userRouter); 
-// --- NEW: Use Booking Route ---
+
 app.use("/listings/:id/bookings", bookingRouter);
 
 app.get("/", (req, res) => {
@@ -91,5 +91,5 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`✅ server is listening on port ${PORT}`);
+  console.log(`server is listening on port ${PORT}`);
 });

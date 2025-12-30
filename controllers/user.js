@@ -4,7 +4,6 @@ module.exports.renderSignupForm = (req, res) => {
     res.render("users/signup.ejs");
 };
 
-
 module.exports.signup = async (req, res) => {
     try {
       
@@ -39,7 +38,7 @@ module.exports.renderLoginForm = (req, res) => {
 
 
 module.exports.login = async (req, res) => {
-    req.flash("success", "Welcome to Wanderlust!");
+    req.flash("success", "Welcome to HotelSpace!");
 
     let redirectUrl = res.locals.redirectUrl || "/listings";
     res.redirect(redirectUrl);
