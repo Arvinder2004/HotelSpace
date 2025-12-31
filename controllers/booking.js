@@ -3,7 +3,6 @@ const Listing = require("../models/listing");
 
 module.exports.createBooking = async (req, res) => {
     const { id } = req.params;
-    const listing = await Listing.findById(id);
     
     const { checkIn, checkOut } = req.body.booking;
 
